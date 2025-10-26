@@ -74,6 +74,10 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
 
   connectedCallback() {
     super.connectedCallback();
+    const saved = localStorage.getItem('foxGallery');
+    if (saved) {
+      this.foxes = JSON.parse(saved);
+    }
     this.getFoxes();
   }
 
@@ -87,6 +91,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
         // data.image contains the fox picture URL
         // add new fox to array
         this.foxes = [...this.foxes, data.image]; 
+        localStorage.setItem('foxGallery', JSON.stringify(this.foxes));
       }
     } 
     catch (error) {
