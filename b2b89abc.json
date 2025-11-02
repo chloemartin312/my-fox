@@ -1,0 +1,104 @@
+{
+  "photos": [
+    {
+      "id": 1,
+      "url": "https://randomfox.ca/images/1.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Joe Cool",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    },
+    {
+      "id": 2,
+      "url": "https://randomfox.ca/images/2.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Jane Doe",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 3,
+      "url": "https://randomfox.ca/images/3.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Alice Smith",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 4,
+      "url": "https://randomfox.ca/images/4.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Bob Johnson",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 5,
+      "url": "https://randomfox.ca/images/5.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Charlie Brown",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 6,
+      "url": "https://randomfox.ca/images/6.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Diana Prince",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 7,
+      "url": "https://randomfox.ca/images/7.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Ethan Hunt",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 8,
+      "url": "https://randomfox.ca/images/8.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Fiona Glenanne",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 9,
+      "url": "https://randomfox.ca/images/9.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "George Bailey",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }, 
+    {
+      "id": 10,
+      "url": "https://randomfox.ca/images/10.jpg",
+      "label": "Fox",
+      "author": {
+        "name": "Hannah Montana",
+        "link": "https://hax.psu.edu/",
+        "photo": "https://picsum.photos/200"
+      }
+    }
+  ]
+}
