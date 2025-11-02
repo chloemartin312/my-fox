@@ -101,7 +101,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
           </div>
 
           <div class="share">
-            <button @click="${() => this.share(card.id)}">Copy Share Link</button>
+            <button @click="${() => this.copyShareLink(card.id)}">Copy Share Link</button>
             ${this.copied ? html`<div class="copied-msg">Link copied!</div>` : ""}
           </div>
         </div>`;
@@ -111,11 +111,19 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
   async loadData() {
     this.loading = true;
     try {
-      const response = await fetch('photos.json');
+      // Fetch the JSON relative to this module so the component works
+      // when imported/used from different base paths.
+      const response = await fetch(new URL('./photos.json', import.meta.url));
+      if (!response.ok) {
+        throw new Error(`Failed to fetch photos.json: ${response.status} ${response.statusText}`);
+      }
       const data = await response.json();
 
+      // Support either an array at the root, or an object with a `photos` key.
+      const photos = Array.isArray(data) ? data : (data.photos || []);
+
       // Map JSON into card objects
-      this.cards = data.photos.map(photo => ({
+      this.cards = photos.map(photo => ({
         id: photo.id,
         title: photo.label,
         imageUrl: photo.url,
@@ -165,11 +173,14 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
   }
 
   // Share action (copy link)
-  share(id) {
-    const card = this.cards.find(c => c.id === id);
-    if (card) {
-      navigator.clipboard.writeText(card.imageUrl);
-      alert('Link copied to clipboard!');
+  async copyShareLink(id) {
+    const url = `${window.location.origin}${window.location.pathname}?fox=${id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      this.copied = true;
+      setTimeout(() => (this.copied = false), 1500);
+    } catch (err) {
+      console.error("Clipboard copy failed", err);
     }
   }
 
