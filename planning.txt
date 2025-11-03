@@ -1,0 +1,7 @@
+what is left to implement:
+    1. finsh JSON file (new pictures? also make at least 50 (i think??))
+    2. light / dark mode 
+    3. mobile responsiveness
+    4. add author section, its already in the JSON and being parsed but there
+       isnt a spot for it on the card
+    5. make it pretty!!!

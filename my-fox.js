@@ -46,10 +46,12 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
     return [super.styles,
     css`
       :host {
-        display: block;
-        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;    
         background-color: var(--ddd-theme-default-shrineTan);
         font-family: var(--ddd-font-secondary);
+        box-sizing: border-box;
         padding: 1rem;
       }
 
@@ -66,15 +68,41 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
       img {
         width: 300px;
         height: 400px;
-        margin: 1rem;
+        margin: 0.5rem;
       }
 
       .card {
         width: 350px;
         height: 800px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;   
         border: 4px solid var(--ddd-theme-default-landgrantBrown);
+        background-color: #FFC3CC;
         border-radius: 12px;
         padding: 1rem;
+        color: var(--ddd-theme-default-landgrantBrown);
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .share {
+        display: flex;
+        color: var(--ddd-theme-default-shrineTan);
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .navigation {
+        color: var(--ddd-theme-default-shrineTan);
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        margin-bottom: 1rem;
       }
     `];
   }
@@ -86,8 +114,10 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
         <div class="card">
           <h3>Fox ${card.id}</h3>
 
-          <button class="arrow" @click="${this.prevCard}" ?disabled="${this.currentIndex === 0}"><</button>
-          <button class="arrow" @click="${this.nextCard}" ?disabled="${this.currentIndex === this.cards.length - 1}">></button>
+          <div class="navigation">
+            <button class="arrow" @click="${this.prevCard}" ?disabled="${this.currentIndex === 0}"><</button>
+            <button class="arrow" @click="${this.nextCard}" ?disabled="${this.currentIndex === this.cards.length - 1}">></button>
+          </div>
 
           ${card.imageUrl
             ? html`<img src="${card.imageUrl}" alt="Fox ${card.id}" />`
@@ -111,18 +141,18 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
   async loadData() {
     this.loading = true;
     try {
-      // Fetch the JSON relative to this module so the component works
-      // when imported/used from different base paths.
+      // Fetch JSON and parse
       const response = await fetch(new URL('./photos.json', import.meta.url));
       if (!response.ok) {
         throw new Error(`Failed to fetch photos.json: ${response.status} ${response.statusText}`);
       }
       const data = await response.json();
 
-      // Support either an array at the root, or an object with a `photos` key.
+      // Support root array or an object
+      // isArray returns (T/F). if true photos = data, else photos = data.photos (or empty array if undefined/null)
       const photos = Array.isArray(data) ? data : (data.photos || []);
 
-      // Map JSON into card objects
+      // Map JSON data into card objects
       this.cards = photos.map(photo => ({
         id: photo.id,
         title: photo.label,
@@ -140,7 +170,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
     }
   }
 
-  // Save and load likes from localStorage
+  // Save & load likes from localStorage
   saveLikesToStorage() {
     localStorage.setItem('foxLikes', JSON.stringify(this.cards));
   }
@@ -149,6 +179,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
     const saved = localStorage.getItem('foxLikes');
     if (saved) {
       const savedData = JSON.parse(saved);
+
       // Match saved likes/dislikes to cards
       this.cards = this.cards.map(card => {
         const savedCard = savedData.find(s => s.id === card.id);
@@ -172,7 +203,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
     this.saveLikesToStorage();
   }
 
-  // Share action (copy link)
+  // Copy share link to clipboard
   async copyShareLink(id) {
     const url = `${window.location.origin}${window.location.pathname}?fox=${id}`;
     try {
@@ -184,7 +215,7 @@ export class MyFox extends DDDSuper(I18NMixin(LitElement)) {
     }
   }
 
-  // Change cards
+  // Next & Previous actions
   nextCard() {
     this.currentIndex = (this.currentIndex + 1) % this.cards.length;
   }
